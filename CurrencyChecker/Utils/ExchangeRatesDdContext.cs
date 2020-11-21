@@ -1,5 +1,5 @@
 ﻿using System;
-using CurrencyChecker.Models;
+using SharedModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

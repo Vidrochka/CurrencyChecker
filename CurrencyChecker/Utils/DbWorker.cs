@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CurrencyChecker.DTO;
 using CurrencyChecker.Exceptions;
-using CurrencyChecker.Models;
+using SharedModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

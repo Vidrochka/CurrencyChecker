@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
-namespace CurrencyChecker.Models
+namespace SharedModels
 {
     [Serializable]
     public class ExchangeRates

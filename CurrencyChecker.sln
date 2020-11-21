@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{22859E
 		SelectExchangeRateValue.sql = SelectExchangeRateValue.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateSelector", "ExchangeRateSelector\ExchangeRateSelector.csproj", "{C003F7F0-DF0C-4B3D-9FF5-FCC931436F1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{B5DB0F79-F38A-40E2-A8AF-9C5D06CF6254}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{953EADE0-8068-4801-952E-CA0C7F513416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{953EADE0-8068-4801-952E-CA0C7F513416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{953EADE0-8068-4801-952E-CA0C7F513416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C003F7F0-DF0C-4B3D-9FF5-FCC931436F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C003F7F0-DF0C-4B3D-9FF5-FCC931436F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C003F7F0-DF0C-4B3D-9FF5-FCC931436F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C003F7F0-DF0C-4B3D-9FF5-FCC931436F1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5DB0F79-F38A-40E2-A8AF-9C5D06CF6254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5DB0F79-F38A-40E2-A8AF-9C5D06CF6254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5DB0F79-F38A-40E2-A8AF-9C5D06CF6254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5DB0F79-F38A-40E2-A8AF-9C5D06CF6254}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
