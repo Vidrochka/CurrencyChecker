@@ -1,0 +1,21 @@
+﻿{
+  //Адрес для запроса валюты. {0} заменится датой в нужном формате
+  "RequestURI": "http://www.cbr.ru/scripts/XML_daily.asp?date_req={0}",
+  //Таймаут веб запроса
+  "WebRequestTimeout": 60000,
+  //Попаток перезапроса и парсинга ответа
+  "RetryRequestCount": 3,
+  //Задержка между запросами
+  "RetryRequestWaitTime": "00:01:00",
+  //Строка конекта к базе
+  "DBConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Database=Currency;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
+  //Количество попыток записи в базу при неудаче
+  "RetryStoreCurrencyCount": 3,
+  //Время между попытками обращения к базе
+  "RetryStoreCurrencyWaitTime": "00:01:00",
+  //Время во сколько происходит запрос валют за новый день (или текущий если время еще не прошло)
+  "CurrencyLoadTime": "00:00:00",
+  //Необходимость запроса валюты за текущий день (не стоит ставить вместе с параметром выше, если время еще не наступило
+  //т.к. встроил проверку на запись данных за одну дату, кинет ошибку на 2 записи в базу )
+  "NeedImmediateLoad": true
+}

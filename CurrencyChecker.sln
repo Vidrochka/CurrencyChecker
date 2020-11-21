@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{94E10390-7A18-4539-B9B2-0CEEB603689E}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyChecker", "CurrencyChecker\CurrencyChecker.csproj", "{953EADE0-8068-4801-952E-CA0C7F513416}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{22859EA7-2D55-455C-BB02-FB146EBFE95E}"
+	ProjectSection(SolutionItems) = preProject
+		CreateTableExchangeRate.sql = CreateTableExchangeRate.sql
+		SelectExchangeRateValue.sql = SelectExchangeRateValue.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{953EADE0-8068-4801-952E-CA0C7F513416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953EADE0-8068-4801-952E-CA0C7F513416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953EADE0-8068-4801-952E-CA0C7F513416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953EADE0-8068-4801-952E-CA0C7F513416}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4F14EDC-0893-435A-8CCA-E588814B37D2}
+	EndGlobalSection
+EndGlobal
