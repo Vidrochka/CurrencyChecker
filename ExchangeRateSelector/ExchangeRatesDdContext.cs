@@ -10,7 +10,6 @@ namespace ExchangeRateSelector
         public DbSet<ExchangeRates> ExchangeRates { get; set; }
 
         private readonly ILogger _logger;
-
         public readonly string ConnectionString;
 
         public ExchangeRatesDdContext(ILogger logger, string connectionString)

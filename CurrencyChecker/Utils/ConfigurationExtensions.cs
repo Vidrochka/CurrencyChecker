@@ -77,9 +77,7 @@ namespace CurrencyChecker.Utils
         }
 
         public static bool GetNeedImmediateLoad(this IConfiguration configuration)
-        {
-            return configuration.GetValue<bool>(NeedImmediateLoad);
-        }
+            => configuration.GetValue<bool>(NeedImmediateLoad);
         #endregion
     }
 }

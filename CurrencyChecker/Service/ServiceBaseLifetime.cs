@@ -22,7 +22,7 @@ namespace CurrencyChecker.Service
             cancellationToken.Register(() => _delayStart.TrySetCanceled());
             ApplicationLifetime.ApplicationStopping.Register(Stop);
 
-            new Thread(Run).Start(); // Otherwise this would block and prevent IHost.StartAsync from finishing.
+            new Thread(Run).Start();
             return _delayStart.Task;
         }
 
@@ -30,7 +30,7 @@ namespace CurrencyChecker.Service
         {
             try
             {
-                Run(this); // This blocks until the service is stopped.
+                Run(this);
                 _delayStart.TrySetException(new InvalidOperationException("Stopped without starting"));
             }
             catch (Exception ex)
@@ -45,15 +45,12 @@ namespace CurrencyChecker.Service
             return Task.CompletedTask;
         }
 
-        // Called by base.Run when the service is ready to start.
         protected override void OnStart(string[] args)
         {
             _delayStart.TrySetResult(null);
             base.OnStart(args);
         }
 
-        // Called by base.Stop. This may be called multiple times by service Stop, ApplicationStopping, and StopAsync.
-        // That's OK because StopApplication uses a CancellationTokenSource and prevents any recursion.
         protected override void OnStop()
         {
             ApplicationLifetime.StopApplication();

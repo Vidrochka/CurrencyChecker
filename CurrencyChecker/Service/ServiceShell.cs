@@ -114,7 +114,7 @@ namespace CurrencyChecker.Service
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"Loading fail. Skip");
+                        _logger.LogError($"Loading fail. Skip. {ex}");
                     }
                     finally
                     {
