@@ -1,8 +1,0 @@
-language: csharp
-solution: CurrencyChecker.sln
-install:
-  - mono nuget restore CurrencyChecker.sln
-  - mono nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release CurrencyChecker.sln
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./CurrencyChecker.Tests/bin/Release/MyProject.Tests.dll
