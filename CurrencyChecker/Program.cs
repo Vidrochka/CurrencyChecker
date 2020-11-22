@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Hosting;
+using NLog.Extensions.Logging;
 
 namespace CurrencyChecker
 {
@@ -21,11 +23,12 @@ namespace CurrencyChecker
                 })
                 .ConfigureLogging(loggerConfiguration =>
                 {
-                    loggerConfiguration.AddConsole();
 #if DEBUG
                     loggerConfiguration.AddDebug();
 #endif
+                    loggerConfiguration.AddNLog("NLog.config");
                 })
+                .UseNLog()
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<DbWorker>();
@@ -34,9 +37,22 @@ namespace CurrencyChecker
                     services.AddSingleton<ExchangeRatesDdContext>();
 
                     services.AddHostedService<ServiceShell>();
+
+                    if (!Environment.UserInteractive)
+                    {
+                        services.AddSingleton<IHostLifetime, ServiceBaseLifetime>();
+                    }
                 });
 
-            await builder.RunConsoleAsync();
+            if (Environment.UserInteractive)
+            {
+                await builder.RunConsoleAsync();
+            }
+            else
+            {
+                await builder.Build().RunAsync();
+            }
+            
         }
     }
 }

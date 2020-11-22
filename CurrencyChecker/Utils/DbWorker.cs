@@ -39,7 +39,7 @@ namespace CurrencyChecker.Utils
                 if (curs is null)
                     throw  new NullReferenceException($"{nameof(curs)} is null");
 
-                if (_dbContext.ExchangeRates.Where(valute => valute.ExchangeRateDate == DateTime.Today).Any())
+                if (_dbContext.ExchangeRates.Where(valute => valute.ExchangeRateDate == curs.Date).Any())
                     throw new ExchangeRatesSaveException($"Valute already save today. We dont know how to save new value");
 
                 curs.Valute.ForEach(valute

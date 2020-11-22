@@ -51,26 +51,16 @@ namespace CurrencyChecker.Service
                 long checkTimeInSeconds = _configuration.GetCurrencyLoadTime();
                 long firstLoadInMilliseconds = 0;
 
+                TimeSpan timeBeforeFirstWork = DateTime.Now > DateTime.Today.AddSeconds(checkTimeInSeconds)
+                    ? DateTime.Today.AddDays(1).AddSeconds(checkTimeInSeconds) - DateTime.Now
+                    : DateTime.Today.AddSeconds(checkTimeInSeconds) - DateTime.Now;
 
-                if (DateTime.Now > DateTime.Today.AddSeconds(checkTimeInSeconds))
-                {
-                    TimeSpan timeBeforeFirstWork =
-                        DateTime.Today.AddDays(1).AddSeconds(checkTimeInSeconds) - DateTime.Now;
-                    firstLoadInMilliseconds = Convert.ToInt64(timeBeforeFirstWork.TotalMilliseconds);
+                firstLoadInMilliseconds = Convert.ToInt64(timeBeforeFirstWork.TotalMilliseconds);
 
-                    _logger.LogInformation($"Now {DateTime.Now:g} more than " +
-                                           $"{DateTime.Today.AddSeconds(checkTimeInSeconds):g}. " +
-                                           $"Work after {timeBeforeFirstWork:g}");
-                }
-                else
-                {
-                    TimeSpan timeBeforeFirstWork = DateTime.Today.AddSeconds(checkTimeInSeconds) - DateTime.Now;
-                    firstLoadInMilliseconds = Convert.ToInt64(timeBeforeFirstWork.TotalMilliseconds);
-
-                    _logger.LogInformation($"Now {DateTime.Now:g} less than " +
-                                           $"{DateTime.Today.AddSeconds(checkTimeInSeconds):g}. " +
-                                           $"Work after {timeBeforeFirstWork:g}");
-                }
+                _logger.LogInformation($"Now {DateTime.Now:g} " +
+                                       $"{(DateTime.Now > DateTime.Today.AddSeconds(checkTimeInSeconds) ? "more": "less")} " +
+                                       $"than {DateTime.Today.AddSeconds(checkTimeInSeconds):g}. " +
+                                       $"Work after {timeBeforeFirstWork:g}");
 
                 _timer = new Timer(_ => _workSignal.Set(), null, firstLoadInMilliseconds, LoadPeriodInSeconds);
 
@@ -80,13 +70,14 @@ namespace CurrencyChecker.Service
                     _workSignal.Set();
 
                 _worker.Start();
+
+                return Task.CompletedTask;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Service not started: {ex}");
+                throw ex;
             }
-
-            return Task.CompletedTask;
         }
 
         private async Task Worker(CancellationToken cancellationToken)
@@ -97,30 +88,39 @@ namespace CurrencyChecker.Service
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ValCurs curs = await RequestCursAsync(cancellationToken).ConfigureAwait(false);
-
-                    if (curs is null)
+                    try
                     {
-                        if (cancellationToken.IsCancellationRequested)
-                            break;
+                        ValCurs curs = await RequestCursAsync(cancellationToken).ConfigureAwait(false);
 
-                        _logger.LogError($"Service cant get exchange rates");
-                        throw new ExchangeRateRequestException("Service cant get exchange rates");
+                        if (curs is null)
+                        {
+                            if (cancellationToken.IsCancellationRequested)
+                                break;
+
+                            _logger.LogError($"Service cant get exchange rates");
+                            throw new ExchangeRateRequestException("Service cant get exchange rates");
+                        }
+
+                        bool dBWriteState = await SaveCursAsync(curs, cancellationToken);
+
+                        if (!dBWriteState)
+                        {
+                            if (cancellationToken.IsCancellationRequested)
+                                break;
+
+                            _logger.LogError($"Service cant store exchange rates");
+                            throw new ExchangeRateRequestException("Service cant store exchange rates");
+                        }
                     }
-
-                    bool dBWriteState = await SaveCursAsync(curs, cancellationToken);
-
-                    if (!dBWriteState)
+                    catch (Exception ex)
                     {
-                        if (cancellationToken.IsCancellationRequested)
-                            break;
-
-                        _logger.LogError($"Service cant store exchange rates");
-                        throw new ExchangeRateRequestException("Service cant store exchange rates");
+                        _logger.LogError($"Loading fail. Skip");
                     }
-
-                    _workSignal.Reset();
-                    _workSignal.Wait(cancellationToken);
+                    finally
+                    {
+                        _workSignal.Reset();
+                        _workSignal.Wait(cancellationToken);
+                    }
                 }
 
                 _logger.LogInformation("Work thread stopped");
@@ -148,7 +148,7 @@ namespace CurrencyChecker.Service
                     {
                         _logger.LogInformation("Wait request timeout");
                         await Task.Delay(_configuration.GetRetryRequestWaitTime(),
-                            _cancellationTokenSource.Token);
+                            cancellationToken);
                         _logger.LogInformation("Request timeout end");
 
                         continue;
@@ -167,7 +167,7 @@ namespace CurrencyChecker.Service
                     {
                         _logger.LogInformation("Wait parse timeout");
                         await Task.Delay(_configuration.GetRetryRequestWaitTime(),
-                            _cancellationTokenSource.Token);
+                            cancellationToken);
                         _logger.LogInformation("Parse timeout end");
 
                         continue;
@@ -201,7 +201,7 @@ namespace CurrencyChecker.Service
                     {
                         _logger.LogInformation("Wait db save timeout");
                         await Task.Delay(_configuration.GetRetryStoreCurrencyWaitTime(),
-                            _cancellationTokenSource.Token);
+                            cancellationToken);
                         _logger.LogInformation("DB timeout end");
 
                         continue;

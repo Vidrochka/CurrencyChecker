@@ -44,6 +44,11 @@ namespace CurrencyChecker.Utils
 
                 HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync().ConfigureAwait(false);
 
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception($"Request fail [{(int)response.StatusCode}]");
+                }
+
                 Stream responseStream = response.GetResponseStream();
 
                 _logger.LogInformation($"{nameof(WebWorker)} done");

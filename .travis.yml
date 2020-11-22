@@ -1,6 +1,14 @@
-language: go
-go:
-  - 1.15.x
+language: csharp
+solution: CurrencyChecker.sln
 
+jobs:
+  include:
+    - dotnet: 2.1.502
+      mono: none
+
+install:
+  - nuget restore CurrencyChecker.sln
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
-  go test ./...
+  - msbuild /p:Configuration=Release CurrencyChecker.sln
+  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./CurrencyChecker.Tests/bin/Release/MyProject.Tests.dll
