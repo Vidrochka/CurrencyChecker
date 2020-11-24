@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{94E10390-7A18-4539-B9B2-0CEEB603689E}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		.travis.yml = .travis.yml
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -23,7 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{6F4675AC-C439-
 		DB\SelectExchangeRateValue.sql = DB\SelectExchangeRateValue.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyChecker.Test", "CurrencyChecker.Test\CurrencyChecker.Test.csproj", "{4A2D8DA6-5008-4601-986D-2884B383CE7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyChecker.Test", "CurrencyChecker.Test\CurrencyChecker.Test.csproj", "{4A2D8DA6-5008-4601-986D-2884B383CE7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateWebView", "ExchangeRateWebView\ExchangeRateWebView.csproj", "{8AA6ECC7-3808-4401-BBA7-4C28DBEC2323}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +48,10 @@ Global
 		{4A2D8DA6-5008-4601-986D-2884B383CE7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A2D8DA6-5008-4601-986D-2884B383CE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A2D8DA6-5008-4601-986D-2884B383CE7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA6ECC7-3808-4401-BBA7-4C28DBEC2323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA6ECC7-3808-4401-BBA7-4C28DBEC2323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA6ECC7-3808-4401-BBA7-4C28DBEC2323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA6ECC7-3808-4401-BBA7-4C28DBEC2323}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
