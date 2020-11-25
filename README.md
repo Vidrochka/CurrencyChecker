@@ -1,12 +1,13 @@
 # CurrencyChecker
 Check currency
 
-Репозиторий состоит из 4 проектов
+Репозиторий состоит из 5 проектов
 
 1. CurrencyChecker - основная программа. Запрашивает данные курса валют и записывает в базу данных
 2. CurrencyChecker.Test - несколько небольших тестов для CurrencyChecker
 3. ExchangeRateSelector - консольная программа выбирающая данные из базы данных
 4. SharedModels - общие модели для проектов
+5. ExchangeRateWebView - 2 web api метода выбирающие данные из таблицы
 
 # CurrencyChecker
 - Конфигурируется фалом congig.json
@@ -26,6 +27,14 @@ Check currency
 1. Номинал
 2. Сумму
 
+# ExchangeRateWebView
+- Имеет 2 get контрола
+1. currency - выдает 1 элемент валюты за текущий день по сокращенному названию валюты (CharCode), формат /currency/CharCode. Если валюта не найдена - 404
+2. currencies - имеет 3 способа работы 
+* /currencies - выводит все валюты за текущий день
+* /currencies/pageLength выводит все за текущий день в количестве не больше pageLength
+* /currencies/pageLength/pageNumber выводит все валюты за текущий день в количестве не больше pageLength с пропуском первых pageLength * (pageNumber - 1) 
+- Ответ приходит в виде json массива / объекта
 ## В папке DB скрипты для базы данных
 - Скрипт для инициализации таблицы (Не нужен из за EF6)
 - Скрипт выбирающий данные из таблицы идентично ExchangeRateSelector

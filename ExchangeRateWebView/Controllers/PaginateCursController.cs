@@ -24,16 +24,19 @@ namespace ExchangeRateWebView.Controllers
         [HttpGet("{pageLength?}/{pageNumber?}")]
         public IEnumerable<ExchangeRates> Get(int? pageLength, int? pageNumber)
         {
-            if (!pageLength.HasValue || _db.ExchangeRates.Count() <= pageLength)
-                return _db.ExchangeRates;
+            IQueryable<ExchangeRates> exchangeRates =
+                _db.ExchangeRates.Where(valute => valute.ExchangeRateDate == DateTime.Today);
+
+            if (!pageLength.HasValue || exchangeRates.Count() <= pageLength)
+                return exchangeRates;
 
             if (!pageNumber.HasValue)
-                return _db.ExchangeRates.Take(pageLength.Value);
+                return exchangeRates.Take(pageLength.Value);
 
-            if (pageLength.Value * (pageNumber.Value - 1) >= _db.ExchangeRates.Count())
-                return _db.ExchangeRates.TakeLast(pageLength.Value);
+            if (pageLength.Value * (pageNumber.Value - 1) >= exchangeRates.Count())
+                return exchangeRates.TakeLast(pageLength.Value);
 
-            return _db.ExchangeRates.Skip(pageLength.Value * (pageNumber.Value - 1)).Take(pageLength.Value);
+            return exchangeRates.Skip(pageLength.Value * (pageNumber.Value - 1)).Take(pageLength.Value);
         }
     }
 }

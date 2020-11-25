@@ -21,12 +21,12 @@ namespace ExchangeRateWebView.Controllers
         }
 
         [HttpGet("{CharCode}")]
-        public IActionResult Get([FromRoute] string CharCode)
+        public IActionResult Get(string CharCode)
         {
             if (CharCode is null)
                 throw new NullReferenceException($"{nameof(CharCode)} is null");
 
-            ExchangeRates valute = _db.ExchangeRates.FirstOrDefault(valute => valute.CharCode == CharCode);
+            ExchangeRates valute = _db.ExchangeRates.FirstOrDefault(valute => valute.CharCode == CharCode && valute.ExchangeRateDate == DateTime.Today);
 
             if (valute is null)
                 return NotFound();
