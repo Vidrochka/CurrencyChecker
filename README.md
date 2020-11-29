@@ -7,7 +7,7 @@ Check currency
 2. CurrencyChecker.Test - несколько небольших тестов для CurrencyChecker
 3. ExchangeRateSelector - консольная программа выбирающая данные из базы данных
 4. SharedModels - общие модели для проектов
-5. ExchangeRateWebView - 2 web api метода выбирающие данные из таблицы
+5. ExchangeRateWebView - 2 web api метода выбирающие данные из таблицы и 3 html страницы
 
 # CurrencyChecker
 - Конфигурируется фалом congig.json
@@ -35,6 +35,10 @@ Check currency
 * /currencies/pageLength выводит все за текущий день в количестве не больше pageLength
 * /currencies/pageLength/pageNumber выводит все валюты за текущий день в количестве не больше pageLength с пропуском первых pageLength * (pageNumber - 1) 
 - Ответ приходит в виде json массива / объекта
+- Содержит html страинцы
+1. index.html - выбор из 2 функций (2 других страниц)
+2. AllCurrenct.html - выводит все валюты имеющися в базе за текущий день
+3. SelectedCurrency.html - страница для поиска валют по CharCode
 ## В папке DB скрипты для базы данных
 - Скрипт для инициализации таблицы (Не нужен из за EF6)
 - Скрипт выбирающий данные из таблицы идентично ExchangeRateSelector
