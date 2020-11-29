@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>All currency</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background-color: darkslategrey;
+        }
+
+        .date-title {
+            width: 100vw;
+            height: 60px;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div class="date-title row justify-content-md-center">
+        <h2>{{date}}</h2>
+    </div>
+    <div class="items container-fluid align-items-center">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Exchange rate date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Char code</th>
+                    <th scope="col">Nominal</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="currency in currencies" v-bind:key="currency.charCode">
+                    <td>{{currency.exchangeRateDate}}</td>
+                    <td>{{currency.name}}</td>
+                    <td>{{currency.charCode}}</td>
+                    <td>{{currency.nominal}}</td>
+                    <td>{{currency.value}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var CurrencyApp = new Vue({
+            el: '.items',
+            data: {
+                currencies: null,
+            },
+            created: async function () {
+                const response = await fetch("/currencies",
+                    {
+                        method: "GET",
+                        headers: { "Accept": "application/json" }
+                    });
+
+                if (response.ok === true) {
+                    this.currencies = await response.json();
+                    console.log("Good request");
+                    console.log(this.currencies);
+                } else {
+                    console.log("Bad request");
+                }
+            }
+        });
+
+        var DateApp = new Vue({
+            el: '.date-title',
+            data: {
+                date: "test"
+            }
+        });
+
+        var today = new Date();
+
+        var day = new Array("Воскресенье", "Понедельник", "Вторник",
+            "Среда", "Четверг", "Пятница", "Суббота");
+
+        var month = new Array("января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря");
+
+        DateApp.date = day[today.getDay()] +
+            " " +
+            today.getDate() +
+            " " +
+            month[today.getMonth()] +
+            " " +
+            today.getFullYear() +
+            " г.";
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

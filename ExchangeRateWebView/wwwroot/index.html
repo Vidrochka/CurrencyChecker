@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Currency checker</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background-color: darkslategrey;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+    <div class="container">
+        <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0" click="">
+            <button type="button" class="btn btn-dark" v-on:click="AllCurrency"> Show all currency</button>
+        </div>
+        <p />
+        <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+            <button type="button" class="btn btn-dark" v-on:click="SelectedCurrency"> Find currency by "char code"</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '.container',
+        methods: {
+            AllCurrency: function () {
+                location = "\AllCurrency.html";
+            },
+            SelectedCurrency: function () {
+                location = "\SelectedCurrency.html";
+            }
+        }
+    })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
